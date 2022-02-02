@@ -1,7 +1,14 @@
 # Sphinx Query Builder for Laravel
 
-[![Build Status](https://travis-ci.org/fobiaphp/laravel-sphinx.svg?branch=master)](https://travis-ci.org/fobiaphp/laravel-sphinx)
+[![Build Status](https://travis-ci.org/serdartaylan/laravel-sphinx.svg?branch=master)](https://travis-ci.org/serdartaylan/laravel-sphinx)
 [![Latest Stable Version](https://poser.pugx.org/fobia/laravel-sphinx/v/stable)](https://packagist.org/packages/fobia/laravel-sphinx)
+
+Fork
+---------
+
+* [fobiaphp/laravel-sphinx](https://github.com/fobiaphp/laravel-sphinx)
+* [ngfw/laravel-sphinx](https://github.com/ngfw/laravel-sphinx)
+
 
 Laravel-Sphinx Database connector, providing an expressive query builder, Eloquent, ActiveRecord style ORM
 
@@ -23,7 +30,7 @@ by adding it as a dependency to your project's composer.json file.
 ```json
 {
     "require": {
-        "fobia/laravel-sphinx": "*"
+        "serdartaylan/laravel-sphinx": "*"
     }
 }
 ```

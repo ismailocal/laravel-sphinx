@@ -1,47 +1,63 @@
 {
-    "name": "fobia/laravel-sphinx",
-    "description": "A Laravel query builder for SphinxQL",
-    "keywords": ["laravel", "database", "sphinxql", "sphinx", "SQL", "query builder", "sphinx eloquent"],
-    "license": "MIT",
-    "type": "project",
-    "require": {
-        "php": ">=7.2",
-        "foolz/sphinxql-query-builder": "^3.0"
+  "name": "serdartaylan/laravel-sphinx",
+  "description": "A Laravel query builder for SphinxQL",
+  "keywords": [
+    "laravel",
+    "database",
+    "sphinxql",
+    "sphinx",
+    "SQL",
+    "query builder",
+    "sphinx eloquent"
+  ],
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "ngfw/laravel-sphinx"
     },
-    "require-dev": {
-        "illuminate/database": "^6.0|^7.0|^8.0",
-        "illuminate/support": "^6.0|^7.0|^8.0",
-        "laravel/scout": "^7.0|^8.0",
-        "symfony/filesystem": "^4.0|^5.0",
-        "orchestra/testbench": "^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "^8.5"
-    },
-    "suggest": {
-        "laravel/framework": "The Laravel Framework",
-        "laravel/scout": "The Laravel scout"
-    },
-    "autoload": {
-        "psr-4": {
-            "Fobia\\Database\\SphinxConnection\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Fobia\\Database\\SphinxConnection\\Test\\": "tests/"
-        }
-    },
-    "prefer-stable": true,
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        },
-        "laravel": {
-            "providers": [
-                "Fobia\\Database\\SphinxConnection\\SphinxServiceProvider"
-            ],
-            "aliases": {
-                "Debugbar": "Fobia\\Database\\SphinxConnection\\Facade"
-            }
-        }
+    {
+      "name": "fobiaphp/laravel-sphinx"
     }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "foolz/sphinxql-query-builder": "^3.0"
+  },
+  "require-dev": {
+    "illuminate/database": "^6.0|^7.0|^8.0",
+    "illuminate/support": "^6.0|^7.0|^8.0",
+    "laravel/scout": "^7.0|^8.0",
+    "symfony/filesystem": "^4.0|^5.0",
+    "orchestra/testbench": "^4.0|^5.0|^6.0",
+    "phpunit/phpunit": "^8.5"
+  },
+  "suggest": {
+    "laravel/framework": "The Laravel Framework",
+    "laravel/scout": "The Laravel scout"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fobia\\Database\\SphinxConnection\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Fobia\\Database\\SphinxConnection\\Test\\": "tests/"
+    }
+  },
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    },
+    "laravel": {
+      "providers": [
+        "Fobia\\Database\\SphinxConnection\\SphinxServiceProvider"
+      ],
+      "aliases": {
+        "Debugbar": "Fobia\\Database\\SphinxConnection\\Facade"
+      }
+    }
+  }
 }
