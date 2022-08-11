@@ -42,7 +42,7 @@ class Builder extends EloquentBuilder
      */
     public function getCountForPagination($columns = ['*'])
     {
-        $results = $this->getQuery()->getConnection()->select('SHOW META');
+        $showMetaRes = $this->getQuery()->getConnection()->select('SHOW META');
         // mysql> SHOW META;
         // +---------------+-------+
         // | Variable_name | Value |
@@ -52,6 +52,8 @@ class Builder extends EloquentBuilder
         // | time          | 0.000 |
         // +---------------+-------+
 
-        return isset($results[1]) ? (int) array_change_key_case((array) $results[1])['value'] : 0;
+        $showMetaTotal = isset($showMetaRes[0]) ? (int) array_change_key_case((array) $showMetaRes[0])['value'] : 0;
+        $showMetaResTotalFound = isset($showMetaRes[1]) ? (int) array_change_key_case((array) $showMetaRes[1])['value'] : 0;
+        return min($showMetaTotal,$showMetaResTotalFound);
     }
 }

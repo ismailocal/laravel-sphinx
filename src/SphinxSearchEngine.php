@@ -289,8 +289,11 @@ class SphinxSearchEngine extends Engine
         $result = new Result($query->get());
 
         if ($total) {
-            $res = $query->getConnection()->select('SHOW META');
-            $total = isset($res[1]) ? (int) array_change_key_case((array) $res[1])['value'] : 0;
+            $showMetaRes = $query->getConnection()->select('SHOW META');
+
+            $showMetaTotal = isset($showMetaRes[0]) ? (int) array_change_key_case((array) $showMetaRes[0])['value'] : 0;
+            $showMetaResTotalFound = isset($showMetaRes[1]) ? (int) array_change_key_case((array) $showMetaRes[1])['value'] : 0;
+            $total = min($showMetaTotal,$showMetaResTotalFound);
         }
         $result->total = $total;
 
