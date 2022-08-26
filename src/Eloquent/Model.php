@@ -33,7 +33,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
      */
     protected $connection = 'sphinx';
 
-    protected $perPage = 15;
+    protected $perPage = 20;
 
     public $timestamps = false;
 
