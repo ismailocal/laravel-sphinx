@@ -23,7 +23,7 @@ class Builder extends EloquentBuilder
 
     public function all($columns = ['*'])
     {
-        return $this->paginate($this->getModel()->maxMatches(),$columns);
+        return $this->paginate($this->getModel()->maxMatches(),$columns,'page',1);
     }
 
     public function paginate($perPage = 20, $columns = ['*'], $pageName = 'page', $page = null)
