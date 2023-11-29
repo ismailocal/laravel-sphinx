@@ -54,6 +54,9 @@ Finally you can just add `Sphinx Connection` to the database array in config/dat
         'host'     => env('SPHINX_HOST', env('DB_HOST','127.0.0.1')),
         'port' => 9306,
         'database' => '',
+        'options' => [
+            \PDO::ATTR_EMULATE_PREPARES => true
+        ]
     ],
 ```
 
