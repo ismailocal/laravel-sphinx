@@ -32,19 +32,45 @@ class Builder extends EloquentBuilder
 
         $results = $this->forPage($page, $perPage)->get($columns);
 
-        $total = $this->getCountForPagination($columns);
+        $totals = $this->getCountForPagination($columns);
+        $total = $totals['total'];
+        $totalFound = $totals['totalFound'];
 
-        return new LengthAwarePaginator($results, $total, $perPage, $page, [
-            'path' => Paginator::resolveCurrentPath(),
-            'pageName' => $pageName,
-        ]);
+        return new class(
+            $results,
+            $total,
+            $perPage,
+            $page,
+            [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => $pageName,
+                'totalFound' => $totalFound,
+            ]
+        ) extends LengthAwarePaginator {
+            public function toArray()
+            {
+                $data = parent::toArray();
+                $data['total_found'] = $this->totalFound;
+                return $data;
+            }
+
+            /**
+             * Get the total found number of items being paginated.
+             *
+             * @return int
+             */
+            public function totalFound()
+            {
+                return $this->totalFound;
+            }
+        };
     }
 
     /**
      * Get the count of the total records for the paginator.
      *
      * @param  array $columns
-     * @return int
+     * @return array
      */
     public function getCountForPagination($columns = ['*'])
     {
@@ -70,6 +96,6 @@ class Builder extends EloquentBuilder
             }
         }
 
-        return min($total, $totalFound);
+        return ['total' => $total, 'totalFound' => $totalFound];
     }
 }
