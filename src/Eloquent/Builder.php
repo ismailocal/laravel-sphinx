@@ -32,23 +32,49 @@ class Builder extends EloquentBuilder
 
         $results = $this->forPage($page, $perPage)->get($columns);
 
-        $total = $this->getCountForPagination($columns);
+        $totals = $this->getCountForPagination($columns);
+        $total = $totals['total'];
+        $totalFound = $totals['totalFound'];
 
-        return new LengthAwarePaginator($results, $total, $perPage, $page, [
-            'path' => Paginator::resolveCurrentPath(),
-            'pageName' => $pageName,
-        ]);
+        return new class(
+            $results,
+            $total,
+            $perPage,
+            $page,
+            [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => $pageName,
+                'totalFound' => $totalFound,
+            ]
+        ) extends LengthAwarePaginator {
+            public function toArray()
+            {
+                $data = parent::toArray();
+                $data['total_found'] = $this->totalFound;
+                return $data;
+            }
+
+            /**
+             * Get the total found number of items being paginated.
+             *
+             * @return int
+             */
+            public function totalFound()
+            {
+                return $this->totalFound;
+            }
+        };
     }
 
     /**
      * Get the count of the total records for the paginator.
      *
      * @param  array $columns
-     * @return int
+     * @return array
      */
     public function getCountForPagination($columns = ['*'])
     {
-        $showMetaRes = $this->getQuery()->getConnection()->select('SHOW META');
+        $metas = $this->getQuery()->getConnection()->select('SHOW META');
         // mysql> SHOW META;
         // +---------------+-------+
         // | Variable_name | Value |
@@ -58,8 +84,18 @@ class Builder extends EloquentBuilder
         // | time          | 0.000 |
         // +---------------+-------+
 
-        $showMetaTotal = isset($showMetaRes[0]) ? (int) array_change_key_case((array) $showMetaRes[0])['value'] : 0;
-        $showMetaResTotalFound = isset($showMetaRes[1]) ? (int) array_change_key_case((array) $showMetaRes[1])['value'] : 0;
-        return min($showMetaTotal,$showMetaResTotalFound);
+        $total = 0;
+        $totalFound = 0;
+
+        foreach ($metas as $meta) {
+            $meta = array_change_key_case((array)$meta);
+            if ($meta['variable_name'] === 'total') {
+                $total = $meta['value'];
+            } else if ($meta['variable_name'] === 'total_found') {
+                $totalFound = $meta['value'];
+            }
+        }
+
+        return ['total' => $total, 'totalFound' => $totalFound];
     }
 }
