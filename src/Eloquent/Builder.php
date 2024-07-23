@@ -96,6 +96,6 @@ class Builder extends EloquentBuilder
             }
         }
 
-        return ['total' => $total, 'totalFound' => $totalFound];
+        return ['total' => $totalFound > 3000 ? 3000 : $totalFound, 'totalFound' => $totalFound];
     }
 }
